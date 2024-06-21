@@ -25,6 +25,7 @@ export async function createTodo(apiKey, body) {
   });
 
   if (!res.ok) {
+    throw new Error("Tạo todo không thành công. Vui lòng thử lại");
   } else {
     return res.json();
   }
