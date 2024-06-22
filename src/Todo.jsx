@@ -13,6 +13,7 @@ function Todo() {
   let email;
 
   useEffect(() => {
+    console.log("ok");
     async function fetchApiKey() {
       if (!apiKey) {
         email = prompt("Vui lòng nhập email của bạn!!");

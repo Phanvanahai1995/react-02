@@ -54,6 +54,7 @@ function TodoItem({ data, apiKey }) {
               valueTodo={valueTodoUpdate}
               setIsComplete={setIsComplete}
               isComplete={isComplete}
+              onDelete={handleDelete}
             />
           ) : (
             <ActionTodo
