@@ -1,36 +1,38 @@
-import { useQuery } from "@tanstack/react-query";
 import TodoForm from "./TodoForm";
-import { getApiKey, getListTodo } from "./lib/data-server";
+import { getApiKey } from "./lib/data-server";
 import Spinner from "./ui/Spinner";
 import TodoList from "./TodoList";
 
+import { useEffect, useState } from "react";
+
+const apiKey = localStorage?.getItem("apiKey");
+
 function Todo() {
+  const [dataApiKey, setDataApiKey] = useState(apiKey);
+
   let email;
-  const apiKey = localStorage?.getItem("apiKey");
 
-  if (!apiKey) {
-    email = prompt("Vui lòng nhập email của bạn!!");
+  useEffect(() => {
+    async function fetchApiKey() {
+      if (!apiKey) {
+        email = prompt("Vui lòng nhập email của bạn!!");
+        const data = await getApiKey(email);
+        setDataApiKey(data);
+      }
+    }
 
-    getApiKey(email);
-  }
-
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["todo"],
-    queryFn: () => getListTodo(apiKey),
-  });
+    fetchApiKey();
+  }, []);
 
   let content;
 
-  if (isLoading) content = <Spinner />;
-
-  if (isError) content = <div>Fetching Todo fail!</div>;
-
-  if (data) content = <TodoList data={data.data.listTodo} apiKey={apiKey} />;
+  if (!dataApiKey) content = <div>Không có công việc nào!</div>;
+  if (dataApiKey) content = <TodoList apiKey={dataApiKey} />;
 
   return (
     <div className="container mx-auto max-w-[800px] bg-slate-700 py-8 flex flex-col items-center gap-8">
       <h1 className="text-white text-3xl font-bold">Welcome to Todo App!</h1>
-      <TodoForm />
+      <TodoForm dataApiKey={dataApiKey} />
       {content}
     </div>
   );

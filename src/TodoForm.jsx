@@ -1,23 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createTodo } from "./lib/data-server";
 import Spinner from "./ui/Spinner";
-import TodoList from "./TodoList";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
-function TodoForm() {
-  const [apiKey, setApiKey] = useState(null);
+function TodoForm({ dataApiKey }) {
   const [valueTodo, setValueTodo] = useState("");
   const queryClient = useQueryClient();
 
-  useEffect(() => {
-    setTimeout(() => {
-      setApiKey(localStorage.getItem("apiKey"));
-    }, 1000);
-  }, []);
-
   const { mutate, isPending } = useMutation({
-    mutationFn: () => createTodo(apiKey, { todo: valueTodo }),
+    mutationFn: () => createTodo(dataApiKey, { todo: valueTodo }),
     onSuccess: () => {
       toast.success(`Thêm todo thành công`);
       setValueTodo("");
@@ -56,12 +48,13 @@ function TodoForm() {
         />
         <button
           className={`${
-            apiKey ? "pointer-events-auto" : "pointer-events-none"
+            dataApiKey ? "pointer-events-auto" : "pointer-events-none"
           } text-white bg-teal-600 px-4 py-1.5 rounded-md hover:bg-teal-400 active:scale-110 transition-all duration-300`}
         >
           Thêm mới
         </button>
       </form>
+      {isPending && <Spinner />}
     </>
   );
 }

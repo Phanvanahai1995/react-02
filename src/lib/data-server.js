@@ -6,11 +6,14 @@ export async function getApiKey(email) {
 
   if (!res.ok) {
     toast.error(`Email không tồn tại trong dữ liệu`);
+    throw new Error("Email không tồn tại trong dữ liệu");
   } else {
     toast.success(`Chào mừng ${email}!`);
     const data = await res.json();
 
     localStorage.setItem("apiKey", data.data.apiKey);
+
+    return data.data.apiKey;
   }
 }
 
