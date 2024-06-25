@@ -36,8 +36,6 @@ function TodoForm({ dataApiKey, isSearch, onSearch, setSearch }) {
 
   let content;
 
-  console.log(data);
-
   if (!data) {
     content = (
       <div className="flex justify-center">
@@ -56,7 +54,7 @@ function TodoForm({ dataApiKey, isSearch, onSearch, setSearch }) {
 
   useEffect(() => {
     if (!isSearch) handleSearchTodo(dataApiKey, valueTodo, setData);
-  }, [isSearch, valueTodo]);
+  }, [isSearch, valueTodo, setData, data]);
 
   return (
     <>

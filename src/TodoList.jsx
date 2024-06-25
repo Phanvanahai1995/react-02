@@ -9,8 +9,6 @@ function TodoList({ apiKey, isSearch }) {
     queryFn: () => getListTodo(apiKey),
   });
 
-  console.log(data);
-
   let content;
 
   if (isLoading)

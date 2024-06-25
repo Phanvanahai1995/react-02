@@ -13,7 +13,9 @@ function ActionTodo({ onDelete, setIsUpdate, isPending }) {
         Sửa
       </button>
       <button
-        onClick={onDelete}
+        onClick={() => {
+          onDelete();
+        }}
         type="button"
         className={`${
           isPending ? "pointer-events-none" : ""

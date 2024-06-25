@@ -1,8 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteTodo } from "./lib/data-server";
 import toast from "react-hot-toast";
-import { Suspense, useState } from "react";
-import Spinner from "./ui/Spinner";
+import { useState } from "react";
 import ActionTodo from "./ActionTodo";
 import ActionUpdate from "./ActionUpdate";
 
