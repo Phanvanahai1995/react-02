@@ -28,7 +28,7 @@ function Todo() {
     }
 
     fetchApiKey();
-  }, [isSearch]);
+  }, []);
 
   let content;
 

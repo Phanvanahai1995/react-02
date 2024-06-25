@@ -74,6 +74,7 @@ function TodoForm({ dataApiKey, isSearch, onSearch, setSearch }) {
           className="bg-slate-700 text-white placeholder:text-gray-400 w-64 px-3 py-1.5 border-none outline-none"
         />
         <button
+          type="submit"
           className={`${
             dataApiKey ? "pointer-events-auto" : "pointer-events-none"
           } text-white bg-teal-600 px-4 py-2 rounded-md hover:bg-teal-400 font-bold active:scale-110 transition-all duration-300`}
