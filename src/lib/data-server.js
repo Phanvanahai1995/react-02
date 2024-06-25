@@ -1,6 +1,8 @@
 import toast from "react-hot-toast";
 import { apiUrl } from "./config";
 
+const query = {};
+
 export async function getApiKey(email) {
   const res = await fetch(`${apiUrl}/api-key?email=${email}`);
 
@@ -34,8 +36,12 @@ export async function createTodo(apiKey, body) {
   }
 }
 
-export async function getListTodo(apiKey) {
-  const res = await fetch(`${apiUrl}/todos`, {
+export async function getListTodo(apiKey, setData) {
+  const queryString = Object.keys(query)
+    ? `?${new URLSearchParams(query).toString()}`
+    : "";
+
+  const res = await fetch(`${apiUrl}/todos${queryString}`, {
     headers: {
       "Content-Type": "application/json",
       "X-Api-Key": apiKey,
@@ -46,6 +52,8 @@ export async function getListTodo(apiKey) {
     throw new Error(`Fetch List Todo fail!`);
   } else {
     const data = await res.json();
+
+    if (typeof setData === "function") setData(data);
 
     return data;
   }
@@ -83,3 +91,22 @@ export async function updatedTodo(apiKey, id, body) {
     return res;
   }
 }
+
+const debounce = (func, timeout = 300) => {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func(...args);
+    }, timeout);
+  };
+};
+
+export const handleSearchTodo = debounce((apiKey, value, setData) => {
+  const keyword = value ? value.trim() : "";
+  query.q = keyword;
+
+  getListTodo(apiKey, setData);
+
+  query.q = "";
+});

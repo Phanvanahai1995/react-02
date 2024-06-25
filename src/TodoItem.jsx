@@ -8,8 +8,8 @@ import ActionUpdate from "./ActionUpdate";
 
 function TodoItem({ data, apiKey }) {
   const [isUpdate, setIsUpdate] = useState(false);
-  const [valueTodoUpdate, setValueTodoUpdate] = useState("");
-  const [isComplete, setIsComplete] = useState(false);
+  const [valueTodoUpdate, setValueTodoUpdate] = useState(data.todo);
+  const [isComplete, setIsComplete] = useState(data.isCompleted);
 
   const queryClient = useQueryClient();
 
@@ -35,37 +35,35 @@ function TodoItem({ data, apiKey }) {
   }
 
   return (
-    <Suspense fallback={<Spinner />}>
-      <li className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
-        <input
-          onChange={handleChange}
-          className={`${
-            isComplete ? "line-through" : ""
-          }  appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-          readOnly={!isUpdate}
-          defaultValue={data.todo}
-        />
-        <div className="flex items-center justify-between mt-4">
-          {isUpdate ? (
-            <ActionUpdate
-              todoId={data._id}
-              apiKey={apiKey}
-              setIsUpdate={setIsUpdate}
-              valueTodo={valueTodoUpdate}
-              setIsComplete={setIsComplete}
-              isComplete={isComplete}
-              onDelete={handleDelete}
-            />
-          ) : (
-            <ActionTodo
-              setIsUpdate={setIsUpdate}
-              onDelete={handleDelete}
-              isPending={isPending}
-            />
-          )}
-        </div>
-      </li>
-    </Suspense>
+    <li className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+      <input
+        onChange={handleChange}
+        className={`${
+          isComplete ? "line-through" : ""
+        }   appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+        readOnly={!isUpdate}
+        defaultValue={data.todo}
+      />
+      <div className="flex items-center justify-between mt-4">
+        {isUpdate ? (
+          <ActionUpdate
+            todoId={data._id}
+            apiKey={apiKey}
+            setIsUpdate={setIsUpdate}
+            valueTodo={valueTodoUpdate}
+            setIsComplete={setIsComplete}
+            isComplete={isComplete}
+            onDelete={handleDelete}
+          />
+        ) : (
+          <ActionTodo
+            setIsUpdate={setIsUpdate}
+            onDelete={handleDelete}
+            isPending={isPending}
+          />
+        )}
+      </div>
+    </li>
   );
 }
 

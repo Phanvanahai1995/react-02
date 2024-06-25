@@ -15,7 +15,14 @@ function ActionUpdate({
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
-    mutationFn: () => updatedTodo(apiKey, todoId, { todo: valueTodo }),
+    mutationFn: () =>
+      updatedTodo(
+        apiKey,
+        todoId,
+        isComplete
+          ? { todo: valueTodo, isCompleted: true }
+          : { todo: valueTodo, isCompleted: false }
+      ),
     onSuccess: () => {
       toast.success("Cập nhật todo thành công!");
       queryClient.invalidateQueries({

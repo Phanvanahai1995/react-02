@@ -3,11 +3,13 @@ import TodoItem from "./TodoItem";
 import Spinner from "./ui/Spinner";
 import { getListTodo } from "./lib/data-server";
 
-function TodoList({ apiKey }) {
+function TodoList({ apiKey, isSearch }) {
   const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["todo"],
     queryFn: () => getListTodo(apiKey),
   });
+
+  console.log(data);
 
   let content;
 
@@ -33,7 +35,7 @@ function TodoList({ apiKey }) {
 
   return (
     <ul className="list-disc w-full max-w-3xl flex flex-col gap-4">
-      {content}
+      {isSearch && content}
     </ul>
   );
 }
