@@ -48,13 +48,18 @@ function TodoForm({ dataApiKey, isSearch, onSearch, setSearch }) {
     );
   } else {
     content = data.data.listTodo.map((todo) => (
-      <TodoItem key={todo._id} data={todo} apiKey={dataApiKey} />
+      <TodoItem
+        key={todo._id}
+        data={todo}
+        apiKey={dataApiKey}
+        setValueTodo={setValueTodo}
+      />
     ));
   }
 
   useEffect(() => {
     if (!isSearch) handleSearchTodo(dataApiKey, valueTodo, setData);
-  }, [isSearch, valueTodo, setData, data]);
+  }, [isSearch, valueTodo, setData]);
 
   return (
     <>

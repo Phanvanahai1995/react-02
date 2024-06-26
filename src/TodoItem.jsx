@@ -5,7 +5,7 @@ import { useState } from "react";
 import ActionTodo from "./ActionTodo";
 import ActionUpdate from "./ActionUpdate";
 
-function TodoItem({ data, apiKey }) {
+function TodoItem({ data, apiKey, setValueTodo }) {
   const [isUpdate, setIsUpdate] = useState(false);
   const [valueTodoUpdate, setValueTodoUpdate] = useState(data.todo);
   const [isComplete, setIsComplete] = useState(data.isCompleted);
@@ -53,12 +53,14 @@ function TodoItem({ data, apiKey }) {
             setIsComplete={setIsComplete}
             isComplete={isComplete}
             onDelete={handleDelete}
+            setValueTodo={setValueTodo}
           />
         ) : (
           <ActionTodo
             setIsUpdate={setIsUpdate}
             onDelete={handleDelete}
             isPending={isPending}
+            setValueTodo={setValueTodo}
           />
         )}
       </div>

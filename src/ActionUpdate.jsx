@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updatedTodo } from "./lib/data-server";
+import { handleSearchTodo, updatedTodo } from "./lib/data-server";
 import toast from "react-hot-toast";
 import SpinnerMini from "./ui/SpinnerMini";
 
@@ -11,6 +11,7 @@ function ActionUpdate({
   setIsComplete,
   isComplete,
   onDelete,
+  setValueTodo,
 }) {
   const queryClient = useQueryClient();
 
@@ -69,7 +70,10 @@ function ActionUpdate({
         </button>
         <button
           onClick={() => {
+            setValueTodo(true);
             onDelete();
+            setTimeout(() => setValueTodo(""), 50);
+            // setValueTodo("");
           }}
           type="button"
           className="bg-red-500 hover:bg-red-700 text-white  font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline "
