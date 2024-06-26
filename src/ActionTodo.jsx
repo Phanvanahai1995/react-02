@@ -1,6 +1,16 @@
 import SpinnerMini from "./ui/SpinnerMini";
 
 function ActionTodo({ onDelete, setIsUpdate, isPending, setValueTodo }) {
+  function handleDelete() {
+    if (typeof setValueTodo === "function") {
+      setValueTodo((prev) => (prev === "" ? true : ""));
+      onDelete();
+      setTimeout(() => setValueTodo(""), 50);
+    } else {
+      onDelete();
+    }
+  }
+
   return (
     <div className="flex items-center">
       <button
@@ -13,11 +23,7 @@ function ActionTodo({ onDelete, setIsUpdate, isPending, setValueTodo }) {
         Sửa
       </button>
       <button
-        onClick={() => {
-          setValueTodo((prev) => (prev === "" ? true : ""));
-          onDelete();
-          setTimeout(() => setValueTodo(""), 50);
-        }}
+        onClick={handleDelete}
         type="button"
         className={`${
           isPending ? "pointer-events-none" : ""

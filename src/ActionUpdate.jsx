@@ -40,6 +40,16 @@ function ActionUpdate({
     setIsUpdate(false);
   }
 
+  function handleDelete() {
+    if (typeof setValueTodo === "function") {
+      setValueTodo((prev) => (prev === "" ? true : ""));
+      onDelete();
+      setTimeout(() => setValueTodo(""), 50);
+    } else {
+      onDelete();
+    }
+  }
+
   return (
     <>
       <div className="flex items-center">
@@ -69,12 +79,7 @@ function ActionUpdate({
           {isPending ? <SpinnerMini /> : "Update"}
         </button>
         <button
-          onClick={() => {
-            setValueTodo(true);
-            onDelete();
-            setTimeout(() => setValueTodo(""), 50);
-            // setValueTodo("");
-          }}
+          onClick={handleDelete}
           type="button"
           className="bg-red-500 hover:bg-red-700 text-white  font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline "
         >
